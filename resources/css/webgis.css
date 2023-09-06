@@ -1,0 +1,277 @@
+.container-fluid{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: 100vw;
+    z-index: 20;
+    /* left: 50px; */
+}
+
+.navbar{
+    padding: 25px;
+    width: 40vw;
+    position: fixed;
+    background-color: rgb(248, 248, 248);
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    padding-left: 50px;
+    padding-right: 50px;
+    /* box-shadow: 1px 1px 1px 1px rgba(46, 43, 43, 0.116); */
+    box-shadow: 0px 3px 5px -2px #000000;
+    transition: ease-in-out 0.5s;
+}
+
+.navbar .nav-item{  
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+.navbar .nav-item .img-logo{
+    height: 60px;
+}
+.navbar .nav-item .nav-brand h1{
+    font-size: 25px;
+    color: rgb(46, 43, 43);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: bold;
+    /* text-align: center; */
+    text-transform: uppercase;
+}
+.navbar .nav-item .nav-brand p{
+    font-size: 15px;
+    color: rgb(46, 43, 43);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: bold;
+    /* text-align: center; */
+    text-transform: uppercase;
+}
+
+.cardMapLayer{
+    position: absolute;
+    display: flex;
+    align-items: center;
+    z-index: 20;
+    height: 100vh;
+    
+}
+
+.cardMapLayer .card-item{
+    display: block;
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+    background-color: #e9ecefa9;
+    padding: 15px;
+    padding-right: 30px;
+    box-shadow: 1px 1px 1px 1px rgba(46, 43, 43, 0.116);
+    border-bottom-right-radius: 25px;
+    border-top-right-radius: 5px;
+}
+.cardMapLayer .card-item h2{
+    font-weight: bold;
+    text-transform: capitalize;
+    display: flex;
+}
+.cardMapLayer .card-item ul li{
+   text-transform: capitalize;
+}
+.cardMapLayer .card-item ul .layerRadio{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.card-side{
+    position: absolute;
+    display: flex;
+    justify-content: flex-end;
+    width: 100vw;
+    z-index: 51;
+}
+.card-side .card-item-on{
+    position: fixed;
+    width: 20vw;
+    height: 100vh;
+    background-color: #e9ecefa9;
+    transition: 1s;
+    padding: 20px;
+}
+.card-side .card-item-off{
+    position: fixed;
+    width: 20vw;
+    height: 100vh;
+    margin-right: -20vw;
+    background-color: #e9ecef0c;
+    transition: 1s;
+    padding: 20px;
+}
+.card-head{
+    background-color: #212529;
+    color: rgb(248, 248, 248);
+    border-radius: 5px;
+    display: flex;
+    padding: 10px;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+.card-value{
+    background-color: #adb5bd3b;
+    border-radius: 5px;
+    display: flex;
+    padding: 10px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.card-value .value{
+    font-size: 50px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #212529;;
+}
+.card-value .besaran{
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 40px;
+    text-transform: uppercase;
+    color: #212529;;
+}
+
+.card-siaga{
+    background-color: #adb5bd3b;
+    border-radius: 5px;
+    display: flex;
+    padding: 10px;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+
+}
+.card-history{
+    background-color: #adb5bd3b;
+    border-radius: 5px;
+    display: block;
+    padding: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-history .head{
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    color: #212529;
+}
+
+.card-history .body{
+    margin-bottom: 10px;
+    font-size: 12px;
+}
+
+.card-history .footer{
+    font-size: 10px;
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 10px;
+    color: #212529;
+    background-color: #21252936;
+    transition: 0.2s;
+    border-radius: 5px;
+    overflow: hidden;
+}
+.card-history .footer:hover{
+    font-size: 10px;
+    font-weight: bold;
+    padding: 10px;
+    /* transform: scale(1.1); */
+    text-transform: uppercase;
+    text-align: center;
+    color: rgb(248, 248, 248);
+    background-color: #212529;
+    border-radius: 5px;
+    transition: 0.2s;
+}
+
+.cr-green{
+    padding: 13px;
+    background-color: rgb(0, 161, 8);
+    border-radius: 5px;
+}
+.cr-green p{
+    margin: -10px;
+    color: rgb(248, 248, 248);
+}
+.cr-yellow{
+    padding: 13px;
+    background-color: rgb(255, 187, 0);
+    border-radius: 5px;
+}
+.cr-yellow p{
+    margin: -10px;
+    color: rgb(248, 248, 248);
+}
+.cr-red{
+    padding: 13px;
+    background-color: rgb(240, 13, 13);
+    border-radius: 5px;
+}
+.cr-red p{
+    margin: -10px;
+    color: rgb(248, 248, 248);
+}
+
+@media screen and (max-width: 768px){
+    .navbar{
+        padding: 15px;
+        width: 100vw; 
+        font-size: 15px;  
+        border-bottom-right-radius: 30px;
+        border-bottom-left-radius: 30px;
+        box-shadow: 0px 3px 5px -2px #000000;
+        transition: ease-in-out 0.5s;
+    }
+    .card-side .card-item-on{
+        width: 70vw;
+    }
+    .card-side .card-item-off{
+        margin-right: -70vw;
+    }
+    .cardMapLayer .card-item{
+        padding: 10px;
+        font-size: 12px;
+        padding-right: 10px;
+    }
+    .cardMapLayer .card-item ul .layerRadio{
+        gap: 10px;
+    }
+
+    .navbar .nav-item .img-logo{
+        height: 60px;
+    }
+    .navbar .nav-item .nav-brand h1{
+        font-size: 17px;
+        color: rgb(46, 43, 43);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-weight: bold;
+        /* text-align: center; */
+        text-transform: uppercase;
+    }
+    .navbar .nav-item .nav-brand p{
+        font-size: 10px;
+        color: rgb(46, 43, 43);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-weight: bold;
+        /* text-align: center; */
+        text-transform: uppercase;
+    }
+}

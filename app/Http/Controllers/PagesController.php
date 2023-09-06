@@ -1,0 +1,23 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Sensor;
+use Illuminate\Http\Request;
+use Inertia\Inertia;
+
+class PagesController extends Controller
+{
+    //
+    public function index()
+    {
+        $data = [
+            'allSensor' => Sensor::all(),
+            'sensor1' => Sensor::where('name', 'sensor1')->latest()->first(),
+            'sensor2' => Sensor::where('name', 'sensor2')->latest()->first(),
+            'sensor3' => Sensor::where('name', 'sensor3')->latest()->first(),
+        ];
+
+        return Inertia::render('Welcome', $data);
+    }
+}
