@@ -84,7 +84,7 @@ export default function Welcome(props) {
             setSensor3(props.sensor3.value)
         }
     })
-
+    // asd
     return (
         <>
             <Head title='Dashboard' />
