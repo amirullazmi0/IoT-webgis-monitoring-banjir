@@ -18,6 +18,7 @@ const CardPopUp = ({ value }) => {
                     Tinggi
                 </div>
             }
+            {/* asd */}
             <div className="value">{value}</div>
         </div>
     )

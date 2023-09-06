@@ -1,5 +1,5 @@
 /node_modules
-/public/build
+# /public/build
 /public/hot
 /public/storage
 /storage/*.key
@@ -9,7 +9,7 @@
 .env.production
 .phpunit.result.cache
 Homestead.json
-Homestead.yaml
+Homestead.yamls
 auth.json
 npm-debug.log
 yarn-error.log
