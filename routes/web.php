@@ -22,4 +22,8 @@ use App\Http\Controllers\ProfileController;
 Route::get('/', [PagesController::class, 'index'])->name('home');
 Route::get('/postSensor', [SensorController::class, 'index']);
 
+
+// API
+Route::get('/alldata/{slug}', [PagesController::class, 'allData']);
+Route::get('/mindata/{slug}', [PagesController::class, 'minData']);
 require __DIR__ . '/auth.php';

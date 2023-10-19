@@ -57,10 +57,46 @@ export default function Welcome(props) {
                 setTile(m.kode)
         })
     }
-
-    const handleMarkerClick = (e) => {
+    const [api, setApi] = useState()
+    const [sideSocket, setSideSocket] = useState()
+    const handleMarkerClick = (e, b) => {
         setPosition(e)
         setSidebar(true)
+        setApi(b)
+        if (b == 'sensor1') {
+            if (!socketSensor) {
+                setSideSocket(sensor1)
+            } else {
+                if (socketSensor.name == b) {
+                    setSideSocket(socketSensor.value)
+                } else {
+                    setSideSocket(sensor1)
+                }
+            }
+        }
+        if (b == 'sensor2') {
+            if (!socketSensor) {
+                setSideSocket(sensor2)
+            } else {
+                if (socketSensor.name == b) {
+                    setSideSocket(socketSensor.value)
+                } else {
+                    setSideSocket(sensor2)
+                }
+            }
+        }
+        if (b == 'sensor3') {
+            if (!socketSensor) {
+                setSideSocket(sensor3)
+            } else {
+                if (socketSensor.name == b) {
+                    setSideSocket(socketSensor.value)
+                } else {
+                    setSideSocket(sensor3)
+                }
+            }
+        }
+
     }
 
     const renderSidebar = (e) => {
@@ -83,14 +119,14 @@ export default function Welcome(props) {
         if (props.sensor3) {
             setSensor3(props.sensor3.value)
         }
-    })
+    }, [])
 
 
     return (
         <>
             <Head title='Dashboard' />
             <Navbar />
-            <CardSide sidebar={sidebar} handle={renderSidebar} />
+            <CardSide socket={sideSocket} api={api} sidebar={sidebar} handle={renderSidebar} />
             <CardLayerMap layer={layer} area={renderArea} marker={renderMarker} handle={handleLayer} />
             <div className="border-map">
                 <MapContainer
@@ -110,7 +146,7 @@ export default function Welcome(props) {
                             <Marker
                                 position={[-0.013507799364533998, 109.34150794692324]}
                                 eventHandlers={{
-                                    click: () => { handleMarkerClick([-0.013507799364533998, 109.34150794692324]) },
+                                    click: () => { handleMarkerClick([-0.013507799364533998, 109.34150794692324], 'sensor1') },
                                 }}
                             >
                                 <Popup>
@@ -120,22 +156,22 @@ export default function Welcome(props) {
                             <Marker
                                 position={[-0.015396, 109.308033]}
                                 eventHandlers={{
-                                    click: () => { handleMarkerClick([-0.015396, 109.308033]) },
+                                    click: () => { handleMarkerClick([-0.015396, 109.308033], 'sensor2') },
                                 }}
                             >
                                 <Popup>
-                                    <CardPopUp value={10} />
+                                    <CardPopUp value={(socketSensor != null && socketSensor.name == 'sensor2') ? socketSensor.value : sensor2} />
                                 </Popup>
                             </Marker>
                             <Marker
                                 position={[-0.041145549983687454, 109.35197836838654]}
                                 eventHandlers={{
-                                    click: () => { handleMarkerClick([-0.041145549983687454, 109.35197836838654]) },
+                                    click: () => { handleMarkerClick([-0.041145549983687454, 109.35197836838654], 'sensor3') },
                                 }}
                             // icon={customIcon}
                             >
                                 <Popup className='mb-7'>
-                                    <CardPopUp value={23} />
+                                    <CardPopUp value={(socketSensor != null && socketSensor.name == 'sensor3') ? socketSensor.value : sensor3} />
                                 </Popup>
                             </Marker>
                         </>

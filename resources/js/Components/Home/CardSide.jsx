@@ -1,11 +1,35 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import '../../../css/webgis.css';
 import { Link } from '@inertiajs/react';
+import axios from 'axios';
 Link
-const CardSide = ({ sidebar, handle }) => {
+const CardSide = ({ sidebar, handle, socket, api }) => {
+    const [iniData, setData] = useState([])
+    const [allData, setAllData] = useState([])
     const handleSide = () => {
         handle(false)
+        iniData()
+        allData()
     }
+
+    const getData = async () => {
+        const data = await axios.get(`https://flood-alert-me.com/mindata/${api}`)
+        setData(data.data.sensor)
+    }
+
+
+    const getAllData = async () => {
+        const data = await axios.get(`https://flood-alert-me.com/alldata/${api}`)
+        setAllData(data.data.sensor)
+    }
+
+    const renderAllData = () => {
+        getAllData()
+        window.my_modal_5.showModal()
+    }
+    useEffect(() => {
+        getData()
+    })
     return (
         <>
             <div className='card-side'>
@@ -19,16 +43,32 @@ const CardSide = ({ sidebar, handle }) => {
                         </button>
                     </div>
                     <div className="card-value">
-                        <div className="value">20</div>
+                        <div className="value">{socket}</div>
                         <div className="besaran">cm</div>
                     </div>
                     <div className="card-siaga">
                         <p>Kondisi : </p>
-                        <div className="cr-green">
-                            <p>
-                                Rendah
-                            </p>
-                        </div>
+                        {socket <= 10 &&
+                            <div className="cr-green">
+                                <p>
+                                    Rendah
+                                </p>
+                            </div>
+                        }
+                        {socket > 10 && socket <= 20 &&
+                            < div className="cr-yellow">
+                                <p>
+                                    Sedang
+                                </p>
+                            </div>
+                        }
+                        {socket > 20 &&
+                            <div className="cr-red">
+                                <p>
+                                    Tinggi
+                                </p>
+                            </div>
+                        }
                     </div>
                     <div className="card-history">
                         <div className="head">
@@ -39,74 +79,111 @@ const CardSide = ({ sidebar, handle }) => {
                                 <table className="table table-sm">
                                     {/* head */}
                                     <thead>
-                                        <tr>
+                                        <tr className='text-center
+                                        '>
                                             <th></th>
                                             <th>Tinggi</th>
+                                            <th>Tanggal</th>
                                             <th>Waktu</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {/* row 1 */}
-                                        <tr>
-                                            <th>1</th>
-                                            <td>20</td>
-                                            <td>Blue</td>
-                                        </tr>
-                                        <tr>
-                                            <th>2</th>
-                                            <td>20</td>
-                                            <td>Blue</td>
-                                        </tr>
-                                        <tr>
-                                            <th>3</th>
-                                            <td>20</td>
-                                            <td>Blue</td>
-                                        </tr>
-                                        <tr>
-                                            <th>4</th>
-                                            <td>20</td>
-                                            <td>Blue</td>
-                                        </tr>
-                                        <tr>
-                                            <th>5</th>
-                                            <td>20</td>
-                                            <td>Blue</td>
-                                        </tr>
-                                        <tr>
-                                            <th>6</th>
-                                            <td>20</td>
-                                            <td>Blue</td>
-                                        </tr>
-                                        <tr>
-                                            <th>7</th>
-                                            <td>20</td>
-                                            <td>Blue</td>
-                                        </tr>
+                                        {iniData && iniData.map((item, index) => {
+                                            const date = new Date(item.created_at)
+                                            const tanggal = date.getDate();
+                                            const bulan = date.getMonth() + 1;
+                                            const tahun = date.getFullYear();
+                                            const jam = date.getHours();
+                                            const menit = date.getMinutes();
+                                            const waktu = `${jam}:${menit}`
+                                            return (
+                                                <tr className='text-xs text-center' key={index}>
+                                                    <th>{index + 1}</th>
+                                                    <td>
+                                                        <div className='w-20'>{`${item.value} cm`}</div>
+                                                    </td>
+                                                    <td>
+                                                        <div className="w-32">
+                                                            {`${tanggal} - ${bulan} - ${tahun}`}
+                                                        </div>
+                                                    </td>
+                                                    <td>{waktu}</td>
+                                                </tr>
+                                            )
+                                        })}
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                         {/* You can open the modal using ID.showModal() method */}
-                        <button className="footer" onClick={() => window.my_modal_5.showModal()}>
+                        <button className="footer" onClick={renderAllData}>
                             <small>Lihat semua data</small>
                         </button>
-                        <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
-                            <form method="dialog" className="modal-box">
-                                <h3 className="font-bold text-lg">Semua</h3>
-                                <p className="py-4">Press ESC key or click the button below to close</p>
-                                <div className="modal-action">
-                                    {/* if there is a button in form, it will close the modal */}
-                                    <button className="btn btn-sm">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                                        </svg>
-                                    </button>
+                        <dialog id="my_modal_5" className="modal">
+                            <div className="modal-box w-11/12 max-w-5xl">
+                                <div className="flex justify-between items-center p-3">
+                                    <h3 className="font-bold text-lg">{api}</h3>
+                                    <form method="dialog">
+                                        {/* if there is a button, it will close the modal */}
+                                        <button className="btn btn-ghost btn-sm">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                            </svg>
+                                        </button>
+                                    </form>
                                 </div>
-                            </form>
+                                {allData ?
+                                    <div className="overflow-y-scroll">
+                                        <div className="overflow-x-auto">
+                                            <table className="table table-sm">
+                                                {/* head */}
+                                                <thead>
+                                                    <tr className='text-center
+                                        '>
+                                                        <th>No</th>
+                                                        <th>Tinggi</th>
+                                                        <th>Tanggal</th>
+                                                        <th>Waktu</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {/* row 1 */}
+                                                    {allData && allData.map((item, index) => {
+                                                        const date = new Date(item.created_at)
+                                                        const tanggal = date.getDate();
+                                                        const bulan = date.getMonth() + 1;
+                                                        const tahun = date.getFullYear();
+                                                        const jam = date.getHours();
+                                                        const menit = date.getMinutes();
+                                                        const waktu = `${jam}:${menit}`
+                                                        return (
+                                                            <tr className='text-xs text-center' key={index}>
+                                                                <th>{index + 1}</th>
+                                                                <td >
+                                                                    {`${item.value} cm`}
+                                                                </td>
+                                                                <td>
+                                                                    {`${tanggal} - ${bulan} - ${tahun}`}
+                                                                </td>
+                                                                <td>{waktu}</td>
+                                                            </tr>
+                                                        )
+                                                    })}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    :
+                                    <div className="p-5">
+                                        <span className="loading loading-spinner loading-lg"></span>
+                                    </div>
+                                }
+                            </div>
                         </dialog>
                     </div>
                 </div>
-            </div>
+            </div >
         </>
     )
 }

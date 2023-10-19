@@ -20,4 +20,23 @@ class PagesController extends Controller
 
         return Inertia::render('Welcome', $data);
     }
+
+    public function allData($slug)
+    {
+        // dd($slug);
+        $data = [
+            'sensor' => Sensor::where('name', $slug)->orderBy('id', 'desc')->get(),
+        ];
+
+        return response()->json($data);
+    }
+    public function minData($slug)
+    {
+        // dd($slug);
+        $data = [
+            'sensor' => Sensor::where('name', $slug)->latest('id')->take(7)->get(),
+        ];
+
+        return response()->json($data);
+    }
 }
