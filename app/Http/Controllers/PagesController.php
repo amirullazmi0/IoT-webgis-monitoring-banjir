@@ -21,6 +21,12 @@ class PagesController extends Controller
         return Inertia::render('Welcome', $data);
     }
 
+    public function login()
+    {
+        $data = [];
+        return Inertia::render("Login", $data);
+    }
+
     public function allData($slug)
     {
         // dd($slug);

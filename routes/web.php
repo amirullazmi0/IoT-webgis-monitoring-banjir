@@ -20,6 +20,7 @@ use App\Http\Controllers\ProfileController;
 */
 
 Route::get('/', [PagesController::class, 'index'])->name('home');
+Route::get('/login', [PagesController::class, 'login'])->name('login');
 Route::get('/postSensor', [SensorController::class, 'index']);
 
 

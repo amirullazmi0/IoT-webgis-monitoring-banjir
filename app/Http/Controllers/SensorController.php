@@ -21,14 +21,22 @@ class SensorController extends Controller
                 'value' => $request->value
             ];
             event(new SensorEvent($data));
-
-            Sensor::create($data);
+            if ($request->create == 1) {
+                Sensor::create($data);
+                return response()->json([
+                    'message' => 'send data sensor berhasil',
+                    'create' => true,
+                    'status' => true,
+                    'data' => $data,
+                    'sensor' => Sensor::all()
+                ]);
+            }
 
             return response()->json([
                 'message' => 'send data sensor berhasil',
+                'create' => false,
                 'status' => true,
                 'data' => $data,
-                'sensor'=> Sensor::all()
             ]);
         }
         return response()->json([

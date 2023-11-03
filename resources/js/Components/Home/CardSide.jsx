@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import '../../../css/webgis.css';
 import { Link } from '@inertiajs/react';
 import axios from 'axios';
-Link
+
 const CardSide = ({ sidebar, handle, socket, api }) => {
     const [iniData, setData] = useState([])
     const [allData, setAllData] = useState([])
