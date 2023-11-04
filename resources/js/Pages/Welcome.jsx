@@ -15,6 +15,15 @@ import Echo from 'laravel-echo';
 import Pusher from 'pusher-js';
 import { latest } from 'maplibre-gl';
 
+import L from 'leaflet'; // Import the leaflet library
+import customIcon from '../../../public/img/marker.png';
+
+const customMarkerIcon = new L.Icon({
+    iconUrl: customIcon,
+    iconSize: [40, 40], // Set the dimensions of your custom icon
+    iconAnchor: [40 / 2, 40], // Adjust the anchor point if needed
+});
+
 window.Pusher = Pusher;
 
 window.Echo = new Echo({
@@ -145,16 +154,18 @@ export default function Welcome(props) {
                         <>
                             <Marker
                                 position={[-0.013507799364533998, 109.34150794692324]}
+                                icon={customMarkerIcon}
                                 eventHandlers={{
                                     click: () => { handleMarkerClick([-0.013507799364533998, 109.34150794692324], 'sensor1') },
                                 }}
                             >
-                                <Popup>
+                                <Popup interactive>
                                     <CardPopUp value={(socketSensor != null && socketSensor.name == 'sensor1') ? socketSensor.value : sensor1} />
                                 </Popup>
                             </Marker>
                             <Marker
                                 position={[-0.015396, 109.308033]}
+                                icon={customMarkerIcon}
                                 eventHandlers={{
                                     click: () => { handleMarkerClick([-0.015396, 109.308033], 'sensor2') },
                                 }}
@@ -165,6 +176,7 @@ export default function Welcome(props) {
                             </Marker>
                             <Marker
                                 position={[-0.041145549983687454, 109.35197836838654]}
+                                icon={customMarkerIcon}
                                 eventHandlers={{
                                     click: () => { handleMarkerClick([-0.041145549983687454, 109.35197836838654], 'sensor3') },
                                 }}

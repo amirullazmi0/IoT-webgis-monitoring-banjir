@@ -1,8 +1,20 @@
 import { Link } from "@inertiajs/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 
-export default function Welcome(props) {
+export default function Login(props) {
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+
+    console.log(email, password);
+    const handleLogin = () => {
+        const data = {
+            email, password
+        }
+
+        setEmail('')
+        setPassword('')
+    }
     return (
         <React.Fragment>
             <div className="grid lg:grid-cols-2 h-screen w-full">
@@ -16,24 +28,24 @@ export default function Welcome(props) {
                                 Login Admin
                             </div>
                             <div className="">
-                                <div className="form-control w-full max-w-xs">
+                                <div className="form-control w-full">
                                     <label className="label">
                                         <span className="label-text">Email</span>
                                     </label>
-                                    <input type="email" placeholder="masukan email" className="input input-sm input-bordered w-full " />
+                                    <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Masukan email" className="input input-accent input-bordered w-full " />
                                 </div>
-                                <div className="form-control w-full max-w-xs">
+                                <div className="form-control w-full">
                                     <label className="label">
                                         <span className="label-text">Password</span>
                                     </label>
-                                    <input type="password" placeholder="masukan password" className="input input-sm input-bordered w-full " />
+                                    <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Masukan password" className="input input-accent input-bordered w-full " />
                                 </div>
                             </div>
                             <div className="m-4">
                                 <hr />
                             </div>
                             <div className="flex">
-                                <button className="btn btn-accent w-full btn-sm text-white">Login</button>
+                                <button onClick={() => handleLogin()} className="btn btn-accent w-full btn-sm text-white">Login</button>
                             </div>
                             <div className="flex items-center justify-center w-full">
                                 <span>kembali ke dashboard </span>

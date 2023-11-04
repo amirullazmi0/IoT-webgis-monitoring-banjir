@@ -21,6 +21,9 @@ use App\Http\Controllers\ProfileController;
 
 Route::get('/', [PagesController::class, 'index'])->name('home');
 Route::get('/login', [PagesController::class, 'login'])->name('login');
+
+Route::get('/admin', [PagesController::class, 'admin'])->name('admin');
+
 Route::get('/postSensor', [SensorController::class, 'index']);
 
 
