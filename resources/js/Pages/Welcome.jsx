@@ -68,6 +68,8 @@ export default function Welcome(props) {
                 setTile(m.kode)
         })
     }
+    // saasdasd
+
     const [koordinatSensor1, setKoordinatSensor1] = useState()
     const [koordinatSensor2, setKoordinatSensor2] = useState()
     const [koordinatSensor3, setKoordinatSensor3] = useState()
