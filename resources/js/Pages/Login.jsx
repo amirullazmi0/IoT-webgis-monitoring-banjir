@@ -1,4 +1,4 @@
-import { Link } from "@inertiajs/react";
+import { Head, Link, router } from "@inertiajs/react";
 import React, { useEffect, useState } from "react";
 
 
@@ -6,23 +6,34 @@ export default function Login(props) {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    console.log(email, password);
+    console.log(props);
     const handleLogin = () => {
         const data = {
             email, password
         }
-
+        router.post(`/login`, data)
         setEmail('')
         setPassword('')
     }
     return (
         <React.Fragment>
+            <Head title='Halaman Login' />
             <div className="grid lg:grid-cols-2 h-screen w-full">
                 <div className="flex justify-center items-center">
                     <div className="card lg:w-3/6 w-5/6 shadow-lg border">
                         <div className="card-body">
+                            {props.errors.email || props.errors.password ?
+                                <React.Fragment>
+                                    <div className="alert">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="stroke-error shrink-0 w-6 h-6"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                        <span>Periksa Kembali Email dan Password</span>
+                                    </div>
+                                </React.Fragment>
+                                :
+                                null
+                            }
                             <div className="logo flex justify-center">
-                                <img className="h-24" src="/img/logo.png" alt="" />
+                                <img className="h-12" src="/img/logo.png" alt="" />
                             </div>
                             <div className="text-2xl font-bold text-center">
                                 Login Admin

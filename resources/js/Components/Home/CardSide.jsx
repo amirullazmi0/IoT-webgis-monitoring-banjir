@@ -3,7 +3,7 @@ import '../../../css/webgis.css';
 import { Link } from '@inertiajs/react';
 import axios from 'axios';
 
-const CardSide = ({ sidebar, handle, socket, api }) => {
+const CardSide = ({ sidebar, handle, socket, api, base_url }) => {
     const [iniData, setData] = useState([])
     const [allData, setAllData] = useState([])
     const handleSide = () => {
@@ -13,13 +13,13 @@ const CardSide = ({ sidebar, handle, socket, api }) => {
     }
 
     const getData = async () => {
-        const data = await axios.get(`https://flood-alert-me.com/mindata/${api}`)
+        const data = await axios.get(`${base_url}/mindata/${api}`)
         setData(data.data.sensor)
     }
 
 
     const getAllData = async () => {
-        const data = await axios.get(`https://flood-alert-me.com/alldata/${api}`)
+        const data = await axios.get(`${base_url}/alldata/${api}`)
         setAllData(data.data.sensor)
     }
 

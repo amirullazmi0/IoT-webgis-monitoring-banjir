@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Inertia\Inertia;
 use App\Models\Sensor;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
+use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class PagesController extends Controller
 {
@@ -13,6 +15,7 @@ class PagesController extends Controller
     {
         $data = [
             'allSensor' => Sensor::all(),
+            'base_url' => env('APP_URL'),
             'sensor1' => Sensor::where('name', 'sensor1')->latest()->first(),
             'sensor2' => Sensor::where('name', 'sensor2')->latest()->first(),
             'sensor3' => Sensor::where('name', 'sensor3')->latest()->first(),
@@ -23,12 +26,30 @@ class PagesController extends Controller
 
     public function login()
     {
-        $data = [];
+        $data = [
+            'base_url' => env('APP_URL'),
+        ];
         return Inertia::render("Login", $data);
+    }
+    public function authlogin(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
+
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+
+            return redirect()->intended('admin');
+        }
+        return back()->with('Periksa Kembali Email dan Password');
     }
     public function admin()
     {
-        $data = [];
+        $data = [
+            'base_url' => env('APP_URL'),
+        ];
         return Inertia::render("Admin", $data);
     }
 
@@ -49,5 +70,11 @@ class PagesController extends Controller
         ];
 
         return response()->json($data);
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+        return redirect('/login'); // Redirect ke halaman login setelah logout
     }
 }

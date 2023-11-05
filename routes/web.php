@@ -21,13 +21,24 @@ use App\Http\Controllers\ProfileController;
 
 Route::get('/', [PagesController::class, 'index'])->name('home');
 Route::get('/login', [PagesController::class, 'login'])->name('login');
+Route::post('/login', [PagesController::class, 'authlogin']);
+Route::post('/logout', [PagesController::class, 'logout']);
 
-Route::get('/admin', [PagesController::class, 'admin'])->name('admin');
 
 Route::get('/postSensor', [SensorController::class, 'index']);
 
-
+Route::middleware(['auth'])->group(function () {
+    Route::get('/admin', [PagesController::class, 'admin'])->name('admin');
+    Route::post('/sensor/delete/{sensor:id}', [SensorController::class, 'deleteSensor']);
+    Route::post('/koordinat/update/{slug}', [SensorController::class, 'koordinatUpdate']);
+});
 // API
+
 Route::get('/alldata/{slug}', [PagesController::class, 'allData']);
 Route::get('/mindata/{slug}', [PagesController::class, 'minData']);
+Route::get('/countSensor', [SensorController::class, 'countSensor']);
+Route::get('/koordinat/{slug}', [SensorController::class, 'koordinat']);
+Route::get('/allkoordinat', [SensorController::class, 'allKoordinat']);
+
+
 require __DIR__ . '/auth.php';

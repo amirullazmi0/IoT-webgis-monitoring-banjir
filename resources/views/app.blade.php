@@ -4,9 +4,10 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title inertia>{{ config('app.name', 'Monitoring Banjir') }}</title>
+        <title inertia>{{ config('', 'Monitoring Banjir') }}</title>
 
         <!-- Fonts -->
+        <link rel="icon" href="/img/marker2.png" type="image/png/x-icon">
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 

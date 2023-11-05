@@ -16,12 +16,13 @@ import Pusher from 'pusher-js';
 import { latest } from 'maplibre-gl';
 
 import L from 'leaflet'; // Import the leaflet library
-import customIcon from '../../../public/img/marker.png';
+import customIcon from '../../../public/img/marker2.png';
+import axios from 'axios';
 
 const customMarkerIcon = new L.Icon({
     iconUrl: customIcon,
-    iconSize: [40, 40], // Set the dimensions of your custom icon
-    iconAnchor: [40 / 2, 40], // Adjust the anchor point if needed
+    iconSize: [50, 50], // Set the dimensions of your custom icon
+    iconAnchor: [50 / 2, 50], // Adjust the anchor point if needed
 });
 
 window.Pusher = Pusher;
@@ -35,11 +36,12 @@ window.Echo = new Echo({
 
 export default function Welcome(props) {
     const mapRef = useRef();
+    const base_url = props.base_url
     const [sidebar, setSidebar] = useState(false)
     const [area, setArea] = useState(false)
     const [marker, setMarker] = useState(true)
-    const [position, setPosition] = useState([-0.01745613099920127, 109.34030619134353])
-    const [zoom] = useState(13);
+    const [position, setPosition] = useState([0.8582213371818204, 112.9331907508798])
+    const [zoom] = useState(11);
     const [API_KEY] = useState('YGBPAuY7utv2Y7SgHp2N');
 
     const [socketSensor, setSocketSensor] = useState(null)
@@ -65,6 +67,22 @@ export default function Welcome(props) {
             m.name == event &&
                 setTile(m.kode)
         })
+    }
+    const [koordinatSensor1, setKoordinatSensor1] = useState()
+    const [koordinatSensor2, setKoordinatSensor2] = useState()
+    const [koordinatSensor3, setKoordinatSensor3] = useState()
+    const getDataKoordinat = async () => {
+        try {
+            const response = await axios.get(`${base_url}/allkoordinat`)
+            if (response.data.koordinat) {
+                setKoordinatSensor1([response.data.koordinat[0].lat, response.data.koordinat[0].lng])
+                setKoordinatSensor2([response.data.koordinat[1].lat, response.data.koordinat[1].lng])
+                setKoordinatSensor3([response.data.koordinat[2].lat, response.data.koordinat[2].lng])
+                // setPosition([response.data.koordinat[0].lat, response.data.koordinat[0].lng])
+            }
+        } catch (error) {
+
+        }
     }
     const [api, setApi] = useState()
     const [sideSocket, setSideSocket] = useState()
@@ -128,105 +146,112 @@ export default function Welcome(props) {
         if (props.sensor3) {
             setSensor3(props.sensor3.value)
         }
+        getDataKoordinat()
     }, [])
 
     return (
         <>
             <Head title='Dashboard' />
             <Navbar />
-            <CardSide socket={sideSocket} api={api} sidebar={sidebar} handle={renderSidebar} />
+            <CardSide base_url={base_url} socket={sideSocket} api={api} sidebar={sidebar} handle={renderSidebar} />
             <CardLayerMap layer={layer} area={renderArea} marker={renderMarker} handle={handleLayer} />
             <div className="border-map">
-                <MapContainer
-                    center={position}
-                    zoom={zoom}
-                    ref={mapRef}
-                    className='map'
-                    zoomControl={false}
-                >
-                    <TileLayer
-                        url={tile}
-                        attribution={"\u003ca href=\"https://www.maptiler.com/copyright/\" target=\"_blank\"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e"}
-                    />
+                {koordinatSensor1 ?
+                    <MapContainer
+                        center={position}
+                        zoom={zoom}
+                        ref={mapRef}
+                        className='map'
+                        zoomControl={false}
+                    >
+                        <TileLayer
+                            url={tile}
+                            attribution={"\u003ca href=\"https://www.maptiler.com/copyright/\" target=\"_blank\"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e"}
+                        />
 
-                    {marker == true ?
-                        <>
-                            <Marker
-                                position={[-0.013507799364533998, 109.34150794692324]}
-                                icon={customMarkerIcon}
-                                eventHandlers={{
-                                    click: () => { handleMarkerClick([-0.013507799364533998, 109.34150794692324], 'sensor1') },
-                                }}
-                            >
-                                <Popup interactive>
-                                    <CardPopUp value={(socketSensor != null && socketSensor.name == 'sensor1') ? socketSensor.value : sensor1} />
-                                </Popup>
-                            </Marker>
-                            <Marker
-                                position={[-0.015396, 109.308033]}
-                                icon={customMarkerIcon}
-                                eventHandlers={{
-                                    click: () => { handleMarkerClick([-0.015396, 109.308033], 'sensor2') },
-                                }}
-                            >
-                                <Popup>
-                                    <CardPopUp value={(socketSensor != null && socketSensor.name == 'sensor2') ? socketSensor.value : sensor2} />
-                                </Popup>
-                            </Marker>
-                            <Marker
-                                position={[-0.041145549983687454, 109.35197836838654]}
-                                icon={customMarkerIcon}
-                                eventHandlers={{
-                                    click: () => { handleMarkerClick([-0.041145549983687454, 109.35197836838654], 'sensor3') },
-                                }}
-                            // icon={customIcon}
-                            >
-                                <Popup className='mb-7'>
-                                    <CardPopUp value={(socketSensor != null && socketSensor.name == 'sensor3') ? socketSensor.value : sensor3} />
-                                </Popup>
-                            </Marker>
-                        </>
-                        :
-                        ''
-                    }
-                    {area == true ?
-                        <>
-                            <Circle
-                                center={[-0.013507799364533998, 109.34150794692324]}
-                                pathOptions={{
-                                    color: 'rgb(255, 187, 0)',
-                                    fillColor: 'rgb(255, 187, 0)',
-                                    stroke: false,
-                                    fillOpacity: 0.6
-                                }}
-                                radius={1200}
-                            />
-                            <Circle
-                                center={[-0.015396, 109.308033]}
-                                pathOptions={{
-                                    color: 'rgb(0, 161, 8)',
-                                    fillColor: 'rgb(0, 161, 8)',
-                                    stroke: false,
-                                    fillOpacity: 0.6
-                                }}
-                                radius={1200}
-                            />
-                            <Circle
-                                center={[-0.041145549983687454, 109.35197836838654]}
-                                pathOptions={{
-                                    color: 'rgb(240, 13, 13)',
-                                    fillColor: 'rgb(240, 13, 13)',
-                                    stroke: false,
-                                    fillOpacity: 0.6
-                                }}
-                                radius={1200}
-                            />
-                        </>
-                        :
-                        ''
-                    }
-                </MapContainer>
-            </div>
+                        {marker == true && koordinatSensor1 ?
+                            <>
+                                <Marker
+                                    position={koordinatSensor1}
+                                    icon={customMarkerIcon}
+                                    eventHandlers={{
+                                        click: () => { handleMarkerClick(koordinatSensor1, 'sensor1') },
+                                    }}
+                                >
+                                    <Popup interactive>
+                                        <CardPopUp value={(socketSensor != null && socketSensor.name == 'sensor1') ? socketSensor.value : sensor1} />
+                                    </Popup>
+                                </Marker>
+                                <Marker
+                                    position={koordinatSensor2}
+                                    icon={customMarkerIcon}
+                                    eventHandlers={{
+                                        click: () => { handleMarkerClick(koordinatSensor2, 'sensor2') },
+                                    }}
+                                >
+                                    <Popup>
+                                        <CardPopUp value={(socketSensor != null && socketSensor.name == 'sensor2') ? socketSensor.value : sensor2} />
+                                    </Popup>
+                                </Marker>
+                                <Marker
+                                    position={koordinatSensor3}
+                                    icon={customMarkerIcon}
+                                    eventHandlers={{
+                                        click: () => { handleMarkerClick(koordinatSensor3, 'sensor3') },
+                                    }}
+                                // icon={customIcon}
+                                >
+                                    <Popup className='mb-7'>
+                                        <CardPopUp value={(socketSensor != null && socketSensor.name == 'sensor3') ? socketSensor.value : sensor3} />
+                                    </Popup>
+                                </Marker>
+                            </>
+                            :
+                            ''
+                        }
+                        {area == true ?
+                            <>
+                                <Circle
+                                    center={[-0.013507799364533998, 109.34150794692324]}
+                                    pathOptions={{
+                                        color: 'rgb(255, 187, 0)',
+                                        fillColor: 'rgb(255, 187, 0)',
+                                        stroke: false,
+                                        fillOpacity: 0.6
+                                    }}
+                                    radius={1200}
+                                />
+                                <Circle
+                                    center={[-0.015396, 109.308033]}
+                                    pathOptions={{
+                                        color: 'rgb(0, 161, 8)',
+                                        fillColor: 'rgb(0, 161, 8)',
+                                        stroke: false,
+                                        fillOpacity: 0.6
+                                    }}
+                                    radius={1200}
+                                />
+                                <Circle
+                                    center={[-0.041145549983687454, 109.35197836838654]}
+                                    pathOptions={{
+                                        color: 'rgb(240, 13, 13)',
+                                        fillColor: 'rgb(240, 13, 13)',
+                                        stroke: false,
+                                        fillOpacity: 0.6
+                                    }}
+                                    radius={1200}
+                                />
+                            </>
+                            :
+                            ''
+                        }
+                    </MapContainer>
+                    :
+                    <div className="flex justify-center items-center h-full w-full bg-blue-100">
+                        <span className="loading loading-ring loading-lg"></span>
+                    </div>
+                }
+            </div >
         </>
     )
 }

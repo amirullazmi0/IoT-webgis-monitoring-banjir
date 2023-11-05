@@ -17,7 +17,7 @@
     padding-left: 50px;
     padding-right: 50px;
     /* box-shadow: 1px 1px 1px 1px rgba(46, 43, 43, 0.116); */
-    box-shadow: 0px 3px 5px -2px #000000;
+    box-shadow: 0px 0px 10px -5px #000000;
     transition: ease-in-out 0.5s;
 }
 
@@ -237,7 +237,7 @@
         font-size: 15px;  
         border-bottom-right-radius: 30px;
         border-bottom-left-radius: 30px;
-        box-shadow: 0px 3px 5px -2px #000000;
+        box-shadow: 0px 0px 10px -5px #000000;
         transition: ease-in-out 0.5s;
     }
     .card-side .card-item-on{

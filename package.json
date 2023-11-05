@@ -25,6 +25,7 @@
         "laravel-echo": "^1.15.3",
         "leaflet": "^1.9.4",
         "maplibre-gl": "^3.1.0",
+        "moment": "^2.29.4",
         "pusher-js": "^8.3.0",
         "react-leaflet": "^4.2.1"
     }
