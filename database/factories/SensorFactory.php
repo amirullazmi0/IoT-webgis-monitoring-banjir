@@ -20,7 +20,7 @@ class SensorFactory extends Factory
         return [
             //
             'name' => fake()->randomElement(['sensor1', 'sensor2', 'sensor3']),
-            'value' => fake()->randomFloat(2, 0, 99.99),
+            'value' => fake()->randomFloat(2, 0, 27.99),
             'created_at' => now(),
         ];
     }

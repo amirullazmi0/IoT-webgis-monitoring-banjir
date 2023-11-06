@@ -17,11 +17,17 @@ class SensorController extends Controller
     {
 
         if ($request->name && $request->value) {
-
             $data = [
                 'name' => $request->name,
                 'value' => $request->value
             ];
+
+            if ($request->value > 140) {
+                $data['value'] = 0;
+            } else {
+                $data['value'] = 140 - $request->value;
+            }
+
             event(new SensorEvent($data));
             if ($request->create == 1) {
                 Sensor::create($data);

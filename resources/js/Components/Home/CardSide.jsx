@@ -121,8 +121,8 @@ const CardSide = ({ sidebar, handle, socket, api, base_url }) => {
                             <small>Lihat semua data</small>
                         </button>
                         <dialog id="my_modal_5" className="modal">
-                            <div className="modal-box w-11/12 max-w-5xl">
-                                <div className="flex justify-between items-center p-3">
+                            <div className="modal-box bg-white w-11/12">
+                                <div className="flex justify-between shadow-lg rounded-lg mb-4 items-center p-3">
                                     <h3 className="font-bold text-lg">{api}</h3>
                                     <form method="dialog">
                                         {/* if there is a button, it will close the modal */}
@@ -133,9 +133,9 @@ const CardSide = ({ sidebar, handle, socket, api, base_url }) => {
                                         </button>
                                     </form>
                                 </div>
-                                {allData ?
-                                    <div className="overflow-y-scroll">
-                                        <div className="overflow-x-auto">
+                                <div className="h-[50vh] overflow-y-scroll overflow-x-auto">
+                                    {allData ?
+                                        <div className="">
                                             <table className="table table-sm">
                                                 {/* head */}
                                                 <thead>
@@ -149,7 +149,7 @@ const CardSide = ({ sidebar, handle, socket, api, base_url }) => {
                                                 </thead>
                                                 <tbody>
                                                     {/* row 1 */}
-                                                    {allData && allData.map((item, index) => {
+                                                    {allData.map((item, index) => {
                                                         const date = new Date(item.created_at)
                                                         const tanggal = date.getDate();
                                                         const bulan = date.getMonth() + 1;
@@ -173,16 +173,16 @@ const CardSide = ({ sidebar, handle, socket, api, base_url }) => {
                                                 </tbody>
                                             </table>
                                         </div>
-                                    </div>
-                                    :
-                                    <div className="p-5">
-                                        <span className="loading loading-spinner loading-lg"></span>
-                                    </div>
-                                }
+                                        :
+                                        <div className="p-5">
+                                            <span className="loading loading-spinner loading-lg"></span>
+                                        </div>
+                                    }
+                                </div>
                             </div>
                         </dialog>
                     </div>
-                </div>
+                </div >
             </div >
         </>
     )

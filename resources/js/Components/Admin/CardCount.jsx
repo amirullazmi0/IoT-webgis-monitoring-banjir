@@ -58,6 +58,13 @@ const CardCount = ({ base_url }) => {
                         }
                     </div>
                 </div>
+                <div className="lg:hidden block card bg-transparent">
+                    <div className="card-body text-center">
+                        <div className="flex justify-center">
+                            <img className={`h-20 w-20`} src="/img/marker2.png" alt="" />
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     )
