@@ -64,7 +64,7 @@ const CardData = ({ base_url }) => {
                 }, 3000)
             }
         } catch (error) {
-
+            console.log(error);
         }
     }
 

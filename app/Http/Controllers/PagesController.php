@@ -16,9 +16,9 @@ class PagesController extends Controller
         $data = [
             'allSensor' => Sensor::all(),
             'base_url' => env('APP_URL'),
-            'sensor1' => Sensor::where('name', 'sensor1')->latest()->first(),
-            'sensor2' => Sensor::where('name', 'sensor2')->latest()->first(),
-            'sensor3' => Sensor::where('name', 'sensor3')->latest()->first(),
+            'sensor1' => Sensor::where('name', 'sensor1')->orderBy('id', 'desc')->latest()->first(),
+            'sensor2' => Sensor::where('name', 'sensor2')->orderBy('id', 'desc')->latest()->first(),
+            'sensor3' => Sensor::where('name', 'sensor3')->orderBy('id', 'desc')->latest()->first(),
         ];
 
         return Inertia::render('Welcome', $data);
@@ -66,7 +66,7 @@ class PagesController extends Controller
     {
         // dd($slug);
         $data = [
-            'sensor' => Sensor::where('name', $slug)->latest('id')->take(7)->get(),
+            'sensor' => Sensor::where('name', $slug)->orderBy('id', 'desc')->take(7)->get(),
         ];
 
         return response()->json($data);

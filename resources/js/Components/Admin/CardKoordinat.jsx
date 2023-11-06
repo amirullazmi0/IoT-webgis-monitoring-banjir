@@ -66,7 +66,7 @@ const CardKoordinat = ({ base_url }) => {
                 data: {
                     latitude: latitude,
                     longitude: longitude
-                }
+                },
             })
             if (response.data.success == true) {
                 setLoading(true)
