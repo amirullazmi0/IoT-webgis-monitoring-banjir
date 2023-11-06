@@ -5,7 +5,6 @@ import React, { useEffect, useState } from "react";
 
 
 export default function Admin(props) {
-    console.log(props);
     return (
         <React.Fragment>
             <Head title='Halaman Admin' />

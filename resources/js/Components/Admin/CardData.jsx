@@ -56,7 +56,6 @@ const CardData = ({ base_url }) => {
         try {
             const response = await axios.post(`${base_url}/sensor/delete/${idDelete}`)
             if (response.data.success == true) {
-                console.log(response.data);
                 setFlashDelete(true)
                 setIdDelete()
                 getSensor()
@@ -75,6 +74,38 @@ const CardData = ({ base_url }) => {
             setSensor(response.data.sensor)
         } catch (error) {
 
+        }
+    }
+
+    function exportTableToExcel(e, x) {
+        var filename = `table-data-${x}`
+        var downloadLink;
+        var dataType = 'application/vnd.ms-excel';
+        var tableSelect = document.getElementById(e);
+        var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
+
+        // Specify file name
+        filename = filename ? filename + '.xls' : 'excel_data.xls';
+
+        // Create download link element
+        downloadLink = document.createElement("a");
+
+        document.body.appendChild(downloadLink);
+
+        if (navigator.msSaveOrOpenBlob) {
+            var blob = new Blob(['\ufeff', tableHTML], {
+                type: dataType
+            });
+            navigator.msSaveOrOpenBlob(blob, filename);
+        } else {
+            // Create a link to the file
+            downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+
+            // Setting the file name
+            downloadLink.download = filename;
+
+            //triggering the function
+            downloadLink.click();
         }
     }
 
@@ -144,7 +175,7 @@ const CardData = ({ base_url }) => {
                         </button>
                     </div>
                     <div className="flex justify-center">
-                        <button className="btn btn-wide btn-secondary btn-sm ">
+                        <button onClick={() => exportTableToExcel('data-sensor', `${navigation}`)} className="btn btn-wide btn-secondary btn-sm ">
                             Export Excel
                         </button>
                     </div>
@@ -203,6 +234,45 @@ const CardData = ({ base_url }) => {
                             <div className="flex justify-center items-center w-full h-24">
                                 <span className="loading loading-ring loading-lg"></span>
                             </div>
+                        }
+                    </div>
+                    <div id='table-sxport' className="hidden">
+                        {sensor &&
+                            <React.Fragment>
+                                <div className="overflow-x-auto">
+                                    <table id={`data-sensor`} className="table">
+                                        <thead>
+                                            <tr className='text-center'>
+                                                <th>No</th>
+                                                <th>Nilai</th>
+                                                <th>Waktu</th>
+                                                <th>Tanggal</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {sensor.map((item, index) => {
+                                                const tanggal = moment(item.created_at).format('DD MMMM YYYY');
+                                                const waktu = moment(item.created_at).format('HH:mm');
+                                                return (
+                                                    <tr className='text-center' key={index}>
+                                                        <th>{index + 1}</th>
+                                                        <td>{item.value}</td>
+                                                        <td>{waktu}</td>
+                                                        <td>{`${tanggal}`}</td>
+                                                    </tr>
+                                                )
+                                            })}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div className="flex justify-center">
+                                    <div className="join">
+                                        <a href={`#table`} onClick={() => handlePrevPagination()} className="join-item btn">«</a>
+                                        <div className="join-item btn">{nextPagination}</div>
+                                        <a href={`#table`} onClick={() => handleNextPagination()} className="join-item btn">»</a>
+                                    </div>
+                                </div>
+                            </React.Fragment>
                         }
                     </div>
                 </div>

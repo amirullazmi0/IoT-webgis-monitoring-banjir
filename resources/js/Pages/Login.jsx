@@ -6,7 +6,6 @@ export default function Login(props) {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    console.log(props);
     const handleLogin = () => {
         const data = {
             email, password
@@ -33,7 +32,7 @@ export default function Login(props) {
                                 null
                             }
                             <div className="logo flex justify-center">
-                                <img className="h-12" src="/img/logo.png" alt="" />
+                                <img className="h-14" src="/img/marker2.png" alt="" />
                             </div>
                             <div className="text-2xl font-bold text-center">
                                 Login Admin

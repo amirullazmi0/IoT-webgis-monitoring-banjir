@@ -29,8 +29,6 @@ const CardKoordinat = ({ base_url }) => {
     ]
     const [tile, setTile] = useState(layer[0].kode)
 
-
-
     function OnCLickMap() {
         const map = useMapEvents({
             click: () => {

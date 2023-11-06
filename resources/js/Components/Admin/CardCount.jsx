@@ -7,7 +7,6 @@ const CardCount = ({ base_url }) => {
         try {
             const response = await axios.get(`${base_url}/countSensor`)
             setCountSensor(response.data)
-            console.log(response.data.sensor1);
         } catch (error) {
 
         }
