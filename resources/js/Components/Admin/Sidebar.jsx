@@ -14,7 +14,7 @@ const Sidebar = ({ active }) => {
     return (
         <div className="navbar bg-white rounded-lg shadow-xl p-4 flex items-center">
             <div className="w-8 rounded">
-                <img src="/img/logo.png" />
+                <img src="/img/logo2.png" />
             </div>
             <div className="navbar-start flex items-center">
                 <ul className='ml-4 gap-4 flex'>

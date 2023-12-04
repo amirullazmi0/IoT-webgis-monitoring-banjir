@@ -17,9 +17,15 @@ class SensorController extends Controller
     {
 
         if ($request->name && $request->value) {
+
+            $koor = Koordinat::where('name', $request->name)->first();
+            $lat = $koor->lat;
+            $lng = $koor->lng;
             $data = [
                 'name' => $request->name,
-                'value' => $request->value
+                'value' => $request->value,
+                'lat' => $lat,
+                'lng' => $lng
             ];
 
             if ($request->value > 140) {
@@ -29,6 +35,7 @@ class SensorController extends Controller
             }
 
             event(new SensorEvent($data));
+
             if ($request->create == 1) {
                 Sensor::create($data);
                 return response()->json([
@@ -59,7 +66,6 @@ class SensorController extends Controller
             'sensor2' => Sensor::where('name', 'sensor2')->count(),
             'sensor3' => Sensor::where('name', 'sensor3')->count(),
         ];
-
         return response()->json($data);
     }
 

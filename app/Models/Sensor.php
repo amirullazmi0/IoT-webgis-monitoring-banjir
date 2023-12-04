@@ -14,5 +14,7 @@ class Sensor extends Model
     protected $fillable = [
         'name',
         'value',
+        'lat',
+        'lng',
     ];
 }

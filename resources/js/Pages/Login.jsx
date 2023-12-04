@@ -32,7 +32,7 @@ export default function Login(props) {
                                 null
                             }
                             <div className="logo flex justify-center">
-                                <img className="h-14" src="/img/marker2.png" alt="" />
+                                <img className="lg:h-20 h-16" src="/img/logo2.png" alt="" />
                             </div>
                             <div className="text-2xl font-bold text-center">
                                 Login Admin

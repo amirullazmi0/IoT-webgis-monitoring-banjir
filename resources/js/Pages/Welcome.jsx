@@ -214,30 +214,30 @@ export default function Welcome(props) {
                         {area == true ?
                             <>
                                 <Circle
-                                    center={[-0.013507799364533998, 109.34150794692324]}
+                                    center={koordinatSensor1}
                                     pathOptions={{
-                                        color: 'rgb(255, 187, 0)',
-                                        fillColor: 'rgb(255, 187, 0)',
+                                        // color: 'rgb(255, 187, 0)',
+                                        // fillColor: 'rgb(255, 187, 0)',
                                         stroke: false,
                                         fillOpacity: 0.6
                                     }}
                                     radius={1200}
                                 />
                                 <Circle
-                                    center={[-0.015396, 109.308033]}
+                                    center={koordinatSensor2}
                                     pathOptions={{
-                                        color: 'rgb(0, 161, 8)',
-                                        fillColor: 'rgb(0, 161, 8)',
+                                        // color: 'rgb(0, 161, 8)',
+                                        // fillColor: 'rgb(0, 161, 8)',
                                         stroke: false,
                                         fillOpacity: 0.6
                                     }}
                                     radius={1200}
                                 />
                                 <Circle
-                                    center={[-0.041145549983687454, 109.35197836838654]}
+                                    center={koordinatSensor3}
                                     pathOptions={{
-                                        color: 'rgb(240, 13, 13)',
-                                        fillColor: 'rgb(240, 13, 13)',
+                                        // color: 'rgb(240, 13, 13)',
+                                        // fillColor: 'rgb(240, 13, 13)',
                                         stroke: false,
                                         fillOpacity: 0.6
                                     }}

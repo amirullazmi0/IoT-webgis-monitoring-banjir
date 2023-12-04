@@ -6,11 +6,11 @@ const Navbar = () => {
         <>
             <div className="container-fluid">
                 <div className="navbar">
-                    <div className="nav-item">
-                        <img className='img-logo' src="/img/logo.png" alt="" />
+                    <div className="nav-item ">
+                        <img className='img-logo' src="/img/logo2.png" alt="" />
                         <div className="nav-brand">
                             <h1>Sistem Pemantauan Banjir</h1 >
-                            <p>Kota Putusibau Kab. Kapuas Hulu</p>
+                            <p>Kota Putussibau Kab. Kapuas Hulu</p>
                         </div>
                     </div>
                 </div>
